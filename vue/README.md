@@ -1,6 +1,6 @@
 ## App UI Template
 
-[Vue.js](https://vuejs.org/)-based web app template for your Cosmos SDK blockchain. Use the template to quickly bootstrap your app. To learn more, check out the components in `@starport/vue` and the [Ignite CLI documentation](https://docs.ignite.com/).
+[Vue.js](https://vuejs.org/)-based web app template for your Cosmos SDK blockchain. Use the template to quickly bootstrap your app. To learn more, check out the components in `@starport/vue` and the [Starport documentation](https://docs.starport.network/).
 
 ## Project setup
 
@@ -22,4 +22,4 @@ npm run build
 
 ### Customize configuration
 
-See the Vue CLI [Configuration Reference](https://cli.vuejs.org/config/) documentation.
+See [Configuration Reference](https://cli.vuejs.org/config/).
