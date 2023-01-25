@@ -18,21 +18,23 @@ paths:
                 type: object
                 properties:
                   playerInfo:
-                    type: object
-                    properties:
-                      index:
-                        type: string
-                      wonCount:
-                        type: string
-                        format: uint64
-                      lostCount:
-                        type: string
-                        format: uint64
-                      forfeitedCount:
-                        type: string
-                        format: uint64
-                      dateUpdated:
-                        type: string
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: string
+                        wonCount:
+                          type: string
+                          format: uint64
+                        lostCount:
+                          type: string
+                          format: uint64
+                        forfeitedCount:
+                          type: string
+                          format: uint64
+                        dateUpdated:
+                          type: string
         default:
           description: An unexpected error response.
           schema:
@@ -30783,21 +30785,23 @@ definitions:
     type: object
     properties:
       playerInfo:
-        type: object
-        properties:
-          index:
-            type: string
-          wonCount:
-            type: string
-            format: uint64
-          lostCount:
-            type: string
-            format: uint64
-          forfeitedCount:
-            type: string
-            format: uint64
-          dateUpdated:
-            type: string
+        type: array
+        items:
+          type: object
+          properties:
+            index:
+              type: string
+            wonCount:
+              type: string
+              format: uint64
+            lostCount:
+              type: string
+              format: uint64
+            forfeitedCount:
+              type: string
+              format: uint64
+            dateUpdated:
+              type: string
   cosmonaut.leaderboard.leaderboard.MsgSendIbcTopRankResponse:
     type: object
   cosmonaut.leaderboard.leaderboard.Params:
@@ -30872,21 +30876,23 @@ definitions:
         type: object
         properties:
           playerInfo:
-            type: object
-            properties:
-              index:
-                type: string
-              wonCount:
-                type: string
-                format: uint64
-              lostCount:
-                type: string
-                format: uint64
-              forfeitedCount:
-                type: string
-                format: uint64
-              dateUpdated:
-                type: string
+            type: array
+            items:
+              type: object
+              properties:
+                index:
+                  type: string
+                wonCount:
+                  type: string
+                  format: uint64
+                lostCount:
+                  type: string
+                  format: uint64
+                forfeitedCount:
+                  type: string
+                  format: uint64
+                dateUpdated:
+                  type: string
   cosmonaut.leaderboard.leaderboard.QueryGetPlayerInfoResponse:
     type: object
     properties:
