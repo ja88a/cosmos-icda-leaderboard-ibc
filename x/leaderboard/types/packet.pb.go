@@ -25,6 +25,7 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 type LeaderboardPacketData struct {
 	// Types that are valid to be assigned to Packet:
 	//	*LeaderboardPacketData_NoData
+	//	*LeaderboardPacketData_CandidatePacket
 	//	*LeaderboardPacketData_IbcTopRankPacket
 	Packet isLeaderboardPacketData_Packet `protobuf_oneof:"packet"`
 }
@@ -71,11 +72,15 @@ type isLeaderboardPacketData_Packet interface {
 type LeaderboardPacketData_NoData struct {
 	NoData *NoData `protobuf:"bytes,1,opt,name=noData,proto3,oneof" json:"noData,omitempty"`
 }
+type LeaderboardPacketData_CandidatePacket struct {
+	CandidatePacket *CandidatePacketData `protobuf:"bytes,3,opt,name=candidatePacket,proto3,oneof" json:"candidatePacket,omitempty"`
+}
 type LeaderboardPacketData_IbcTopRankPacket struct {
 	IbcTopRankPacket *IbcTopRankPacketData `protobuf:"bytes,2,opt,name=ibcTopRankPacket,proto3,oneof" json:"ibcTopRankPacket,omitempty"`
 }
 
 func (*LeaderboardPacketData_NoData) isLeaderboardPacketData_Packet()           {}
+func (*LeaderboardPacketData_CandidatePacket) isLeaderboardPacketData_Packet()  {}
 func (*LeaderboardPacketData_IbcTopRankPacket) isLeaderboardPacketData_Packet() {}
 
 func (m *LeaderboardPacketData) GetPacket() isLeaderboardPacketData_Packet {
@@ -92,6 +97,13 @@ func (m *LeaderboardPacketData) GetNoData() *NoData {
 	return nil
 }
 
+func (m *LeaderboardPacketData) GetCandidatePacket() *CandidatePacketData {
+	if x, ok := m.GetPacket().(*LeaderboardPacketData_CandidatePacket); ok {
+		return x.CandidatePacket
+	}
+	return nil
+}
+
 func (m *LeaderboardPacketData) GetIbcTopRankPacket() *IbcTopRankPacketData {
 	if x, ok := m.GetPacket().(*LeaderboardPacketData_IbcTopRankPacket); ok {
 		return x.IbcTopRankPacket
@@ -103,6 +115,7 @@ func (m *LeaderboardPacketData) GetIbcTopRankPacket() *IbcTopRankPacketData {
 func (*LeaderboardPacketData) XXX_OneofWrappers() []interface{} {
 	return []interface{}{
 		(*LeaderboardPacketData_NoData)(nil),
+		(*LeaderboardPacketData_CandidatePacket)(nil),
 		(*LeaderboardPacketData_IbcTopRankPacket)(nil),
 	}
 }
@@ -249,35 +262,124 @@ func (m *IbcTopRankPacketAck) GetPlayerId() string {
 	return ""
 }
 
+// CandidatePacketData defines a struct for the packet payload
+type CandidatePacketData struct {
+	PlayerInfo *PlayerInfo `protobuf:"bytes,1,opt,name=playerInfo,proto3" json:"playerInfo,omitempty"`
+}
+
+func (m *CandidatePacketData) Reset()         { *m = CandidatePacketData{} }
+func (m *CandidatePacketData) String() string { return proto.CompactTextString(m) }
+func (*CandidatePacketData) ProtoMessage()    {}
+func (*CandidatePacketData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_be3d647100ade211, []int{4}
+}
+func (m *CandidatePacketData) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CandidatePacketData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CandidatePacketData.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CandidatePacketData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CandidatePacketData.Merge(m, src)
+}
+func (m *CandidatePacketData) XXX_Size() int {
+	return m.Size()
+}
+func (m *CandidatePacketData) XXX_DiscardUnknown() {
+	xxx_messageInfo_CandidatePacketData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CandidatePacketData proto.InternalMessageInfo
+
+func (m *CandidatePacketData) GetPlayerInfo() *PlayerInfo {
+	if m != nil {
+		return m.PlayerInfo
+	}
+	return nil
+}
+
+// CandidatePacketAck defines a struct for the packet acknowledgment
+type CandidatePacketAck struct {
+}
+
+func (m *CandidatePacketAck) Reset()         { *m = CandidatePacketAck{} }
+func (m *CandidatePacketAck) String() string { return proto.CompactTextString(m) }
+func (*CandidatePacketAck) ProtoMessage()    {}
+func (*CandidatePacketAck) Descriptor() ([]byte, []int) {
+	return fileDescriptor_be3d647100ade211, []int{5}
+}
+func (m *CandidatePacketAck) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CandidatePacketAck) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CandidatePacketAck.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CandidatePacketAck) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CandidatePacketAck.Merge(m, src)
+}
+func (m *CandidatePacketAck) XXX_Size() int {
+	return m.Size()
+}
+func (m *CandidatePacketAck) XXX_DiscardUnknown() {
+	xxx_messageInfo_CandidatePacketAck.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CandidatePacketAck proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*LeaderboardPacketData)(nil), "cosmonaut.leaderboard.leaderboard.LeaderboardPacketData")
 	proto.RegisterType((*NoData)(nil), "cosmonaut.leaderboard.leaderboard.NoData")
 	proto.RegisterType((*IbcTopRankPacketData)(nil), "cosmonaut.leaderboard.leaderboard.IbcTopRankPacketData")
 	proto.RegisterType((*IbcTopRankPacketAck)(nil), "cosmonaut.leaderboard.leaderboard.IbcTopRankPacketAck")
+	proto.RegisterType((*CandidatePacketData)(nil), "cosmonaut.leaderboard.leaderboard.CandidatePacketData")
+	proto.RegisterType((*CandidatePacketAck)(nil), "cosmonaut.leaderboard.leaderboard.CandidatePacketAck")
 }
 
 func init() { proto.RegisterFile("leaderboard/packet.proto", fileDescriptor_be3d647100ade211) }
 
 var fileDescriptor_be3d647100ade211 = []byte{
-	// 277 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xc8, 0x49, 0x4d, 0x4c,
-	0x49, 0x2d, 0x4a, 0xca, 0x4f, 0x2c, 0x4a, 0xd1, 0x2f, 0x48, 0x4c, 0xce, 0x4e, 0x2d, 0xd1, 0x2b,
-	0x28, 0xca, 0x2f, 0xc9, 0x17, 0x52, 0x4c, 0xce, 0x2f, 0xce, 0xcd, 0xcf, 0x4b, 0x2c, 0x2d, 0xd1,
-	0x43, 0x52, 0x83, 0xcc, 0x56, 0x3a, 0xcb, 0xc8, 0x25, 0xea, 0x83, 0xe0, 0x07, 0x80, 0xb5, 0xbb,
-	0x24, 0x96, 0x24, 0x0a, 0x39, 0x73, 0xb1, 0xe5, 0xe5, 0x83, 0x58, 0x12, 0x8c, 0x0a, 0x8c, 0x1a,
-	0xdc, 0x46, 0x9a, 0x7a, 0x04, 0x4d, 0xd3, 0xf3, 0x03, 0x6b, 0xf0, 0x60, 0x08, 0x82, 0x6a, 0x15,
-	0x4a, 0xe5, 0x12, 0xc8, 0x4c, 0x4a, 0x0e, 0xc9, 0x2f, 0x08, 0x4a, 0xcc, 0xcb, 0x86, 0x18, 0x2e,
-	0xc1, 0x04, 0x36, 0xce, 0x9c, 0x08, 0xe3, 0x3c, 0xd1, 0xb4, 0x42, 0x0d, 0xc7, 0x30, 0xd2, 0x89,
-	0x83, 0x8b, 0x0d, 0xe2, 0x71, 0x25, 0x0e, 0x2e, 0x36, 0x88, 0x23, 0x94, 0x62, 0xb8, 0x44, 0xb0,
-	0xe9, 0x17, 0x92, 0xe2, 0xe2, 0x28, 0xc8, 0x49, 0xac, 0x4c, 0x2d, 0xf2, 0x4c, 0x01, 0xfb, 0x8c,
-	0x33, 0x08, 0xce, 0x17, 0x12, 0xe2, 0x62, 0x29, 0x4a, 0xcc, 0xcb, 0x06, 0x3b, 0x91, 0x25, 0x08,
-	0xcc, 0x16, 0x12, 0xe1, 0x62, 0x2d, 0x4e, 0xce, 0x2f, 0x4a, 0x95, 0x60, 0x06, 0x0b, 0x42, 0x38,
-	0x4a, 0x86, 0x5c, 0xc2, 0xe8, 0xa6, 0x3b, 0x26, 0x67, 0xe3, 0x33, 0xdc, 0xc9, 0xef, 0xc4, 0x23,
-	0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18, 0x1f, 0x3c, 0x92, 0x63, 0x9c, 0xf0, 0x58, 0x8e, 0xe1, 0xc2,
-	0x63, 0x39, 0x86, 0x1b, 0x8f, 0xe5, 0x18, 0xa2, 0x4c, 0xd2, 0x33, 0x4b, 0x32, 0x4a, 0x93, 0xf4,
-	0x92, 0xf3, 0x73, 0xf5, 0xe1, 0xa1, 0xa2, 0x8f, 0x1c, 0xad, 0x15, 0x28, 0xbc, 0x92, 0xca, 0x82,
-	0xd4, 0xe2, 0x24, 0x36, 0x70, 0x24, 0x1b, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0x40, 0xab, 0x40,
-	0xe2, 0x00, 0x02, 0x00, 0x00,
+	// 353 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x92, 0xcf, 0x4a, 0xf3, 0x40,
+	0x14, 0xc5, 0x93, 0x7e, 0xfd, 0x42, 0xbd, 0x2e, 0x94, 0x69, 0x85, 0x52, 0x30, 0x68, 0x56, 0xba,
+	0x30, 0xc5, 0x3f, 0xe8, 0xba, 0xad, 0x0b, 0x0b, 0x5a, 0x4a, 0x70, 0x25, 0x82, 0x4c, 0x26, 0x53,
+	0x0d, 0x69, 0x67, 0xc2, 0x74, 0x0a, 0xf6, 0x2d, 0x7c, 0x15, 0xdf, 0xc2, 0x65, 0x97, 0x2e, 0xa5,
+	0x7d, 0x11, 0x71, 0x66, 0xa8, 0x69, 0x2c, 0x9a, 0xdd, 0xbd, 0x70, 0xce, 0xef, 0x24, 0x67, 0x2e,
+	0xd4, 0x87, 0x14, 0x47, 0x54, 0x84, 0x1c, 0x8b, 0xa8, 0x99, 0x62, 0x92, 0x50, 0xe9, 0xa7, 0x82,
+	0x4b, 0x8e, 0xf6, 0x09, 0x1f, 0x8f, 0x38, 0xc3, 0x13, 0xe9, 0x67, 0x34, 0xd9, 0xb9, 0xb1, 0xbb,
+	0x62, 0x1e, 0xe2, 0x29, 0x15, 0x0f, 0x31, 0x1b, 0x70, 0x4d, 0xf0, 0x5e, 0x4b, 0xb0, 0x73, 0xfd,
+	0xad, 0xe8, 0x2b, 0xfa, 0x25, 0x96, 0x18, 0x75, 0xc0, 0x61, 0xfc, 0x6b, 0xaa, 0xdb, 0x7b, 0xf6,
+	0xc1, 0xe6, 0xc9, 0xa1, 0xff, 0x67, 0x98, 0xdf, 0x53, 0x86, 0x2b, 0x2b, 0x30, 0x56, 0x14, 0xc2,
+	0x16, 0xc1, 0x2c, 0x8a, 0x23, 0x2c, 0xa9, 0x66, 0xd7, 0xff, 0x29, 0xda, 0x79, 0x01, 0x5a, 0x67,
+	0xd5, 0x69, 0xd0, 0x79, 0x20, 0xa2, 0xb0, 0x1d, 0x87, 0xe4, 0x96, 0xa7, 0x01, 0x66, 0x89, 0x09,
+	0x29, 0xa9, 0x90, 0x8b, 0x02, 0x21, 0xdd, 0x9c, 0xd5, 0xa4, 0xfc, 0x40, 0xb6, 0x2b, 0xe0, 0xe8,
+	0xee, 0xbd, 0x0a, 0x38, 0xfa, 0x47, 0xbd, 0x7b, 0xa8, 0xad, 0xf3, 0xa3, 0x06, 0x54, 0x74, 0xd5,
+	0xdd, 0x48, 0xb5, 0xb7, 0x11, 0x2c, 0x77, 0x84, 0xa0, 0x2c, 0x30, 0x4b, 0xd4, 0x27, 0x96, 0x03,
+	0x35, 0xa3, 0x1a, 0xfc, 0x1f, 0x13, 0x2e, 0xa8, 0x2a, 0xa7, 0x1c, 0xe8, 0xc5, 0x3b, 0x86, 0x6a,
+	0x9e, 0xde, 0x22, 0xc9, 0x6f, 0x70, 0x2f, 0x82, 0xea, 0x9a, 0xd6, 0xd0, 0x0d, 0x80, 0x91, 0xb0,
+	0x01, 0x37, 0xef, 0x79, 0x54, 0xa0, 0x9c, 0xfe, 0xd2, 0x14, 0x64, 0x00, 0x5e, 0x0d, 0x50, 0x2e,
+	0xa5, 0x45, 0x92, 0x76, 0xef, 0x6d, 0xee, 0xda, 0xb3, 0xb9, 0x6b, 0x7f, 0xcc, 0x5d, 0xfb, 0x65,
+	0xe1, 0x5a, 0xb3, 0x85, 0x6b, 0xbd, 0x2f, 0x5c, 0xeb, 0xee, 0xec, 0x31, 0x96, 0x4f, 0x93, 0xd0,
+	0x27, 0x7c, 0xd4, 0x5c, 0x86, 0x36, 0xb3, 0x87, 0xf9, 0xbc, 0xb2, 0xc9, 0x69, 0x4a, 0xc7, 0xa1,
+	0xa3, 0x2e, 0xf4, 0xf4, 0x33, 0x00, 0x00, 0xff, 0xff, 0x77, 0xaf, 0xcc, 0x4f, 0xff, 0x02, 0x00,
+	0x00,
 }
 
 func (m *LeaderboardPacketData) Marshal() (dAtA []byte, err error) {
@@ -351,6 +453,27 @@ func (m *LeaderboardPacketData_IbcTopRankPacket) MarshalToSizedBuffer(dAtA []byt
 		}
 		i--
 		dAtA[i] = 0x12
+	}
+	return len(dAtA) - i, nil
+}
+func (m *LeaderboardPacketData_CandidatePacket) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LeaderboardPacketData_CandidatePacket) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.CandidatePacket != nil {
+		{
+			size, err := m.CandidatePacket.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPacket(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
 	}
 	return len(dAtA) - i, nil
 }
@@ -447,6 +570,64 @@ func (m *IbcTopRankPacketAck) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *CandidatePacketData) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CandidatePacketData) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CandidatePacketData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.PlayerInfo != nil {
+		{
+			size, err := m.PlayerInfo.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPacket(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *CandidatePacketAck) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CandidatePacketAck) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CandidatePacketAck) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintPacket(dAtA []byte, offset int, v uint64) int {
 	offset -= sovPacket(v)
 	base := offset
@@ -494,6 +675,18 @@ func (m *LeaderboardPacketData_IbcTopRankPacket) Size() (n int) {
 	}
 	return n
 }
+func (m *LeaderboardPacketData_CandidatePacket) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.CandidatePacket != nil {
+		l = m.CandidatePacket.Size()
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	return n
+}
 func (m *NoData) Size() (n int) {
 	if m == nil {
 		return 0
@@ -532,6 +725,28 @@ func (m *IbcTopRankPacketAck) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovPacket(uint64(l))
 	}
+	return n
+}
+
+func (m *CandidatePacketData) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.PlayerInfo != nil {
+		l = m.PlayerInfo.Size()
+		n += 1 + l + sovPacket(uint64(l))
+	}
+	return n
+}
+
+func (m *CandidatePacketAck) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	return n
 }
 
@@ -639,6 +854,41 @@ func (m *LeaderboardPacketData) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			m.Packet = &LeaderboardPacketData_IbcTopRankPacket{v}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CandidatePacket", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &CandidatePacketData{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Packet = &LeaderboardPacketData_CandidatePacket{v}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -892,6 +1142,142 @@ func (m *IbcTopRankPacketAck) Unmarshal(dAtA []byte) error {
 			}
 			m.PlayerId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPacket(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CandidatePacketData) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPacket
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CandidatePacketData: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CandidatePacketData: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PlayerInfo", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPacket
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthPacket
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.PlayerInfo == nil {
+				m.PlayerInfo = &PlayerInfo{}
+			}
+			if err := m.PlayerInfo.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPacket(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthPacket
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CandidatePacketAck) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPacket
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CandidatePacketAck: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CandidatePacketAck: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipPacket(dAtA[iNdEx:])

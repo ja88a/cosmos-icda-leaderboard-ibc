@@ -5,11 +5,13 @@ import { LeaderboardPacketData } from "./module/types/leaderboard/packet"
 import { NoData } from "./module/types/leaderboard/packet"
 import { IbcTopRankPacketData } from "./module/types/leaderboard/packet"
 import { IbcTopRankPacketAck } from "./module/types/leaderboard/packet"
+import { CandidatePacketData } from "./module/types/leaderboard/packet"
+import { CandidatePacketAck } from "./module/types/leaderboard/packet"
 import { Params } from "./module/types/leaderboard/params"
 import { PlayerInfo } from "./module/types/leaderboard/player_info"
 
 
-export { Board, LeaderboardPacketData, NoData, IbcTopRankPacketData, IbcTopRankPacketAck, Params, PlayerInfo };
+export { Board, LeaderboardPacketData, NoData, IbcTopRankPacketData, IbcTopRankPacketAck, CandidatePacketData, CandidatePacketAck, Params, PlayerInfo };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -58,6 +60,8 @@ const getDefaultState = () => {
 						NoData: getStructure(NoData.fromPartial({})),
 						IbcTopRankPacketData: getStructure(IbcTopRankPacketData.fromPartial({})),
 						IbcTopRankPacketAck: getStructure(IbcTopRankPacketAck.fromPartial({})),
+						CandidatePacketData: getStructure(CandidatePacketData.fromPartial({})),
+						CandidatePacketAck: getStructure(CandidatePacketAck.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						PlayerInfo: getStructure(PlayerInfo.fromPartial({})),
 						

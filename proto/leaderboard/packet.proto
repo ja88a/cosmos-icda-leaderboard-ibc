@@ -2,6 +2,7 @@ syntax = "proto3";
 package cosmonaut.leaderboard.leaderboard;
 
 // this line is used by starport scaffolding # proto/packet/import
+import "leaderboard/player_info.proto";
 
 option go_package = "github.com/cosmonaut/leaderboard/x/leaderboard/types";
 
@@ -9,6 +10,7 @@ message LeaderboardPacketData {
     oneof packet {
         NoData noData = 1;
         // this line is used by starport scaffolding # ibc/packet/proto/field
+				CandidatePacketData candidatePacket = 3; // this line is used by starport scaffolding # ibc/packet/proto/field/number
 				IbcTopRankPacketData ibcTopRankPacket = 2; // this line is used by starport scaffolding # ibc/packet/proto/field/number
     }
 }
@@ -27,4 +29,12 @@ message IbcTopRankPacketData {
 message IbcTopRankPacketAck {
 	  string playerId = 1;
 }
+// CandidatePacketData defines a struct for the packet payload
+message CandidatePacketData {
+  PlayerInfo playerInfo = 1;
+}
+
+// CandidatePacketAck defines a struct for the packet acknowledgment
+message CandidatePacketAck {
+	}
 // this line is used by starport scaffolding # ibc/packet/proto/message
