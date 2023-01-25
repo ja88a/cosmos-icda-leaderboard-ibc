@@ -4,6 +4,55 @@ info:
   name: ''
   description: ''
 paths:
+  /cosmonaut/leaderboard/leaderboard/board:
+    get:
+      summary: Queries a Board by index.
+      operationId: CosmonautLeaderboardLeaderboardBoard
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              Board:
+                type: object
+                properties:
+                  playerInfo:
+                    type: object
+                    properties:
+                      index:
+                        type: string
+                      wonCount:
+                        type: string
+                        format: uint64
+                      lostCount:
+                        type: string
+                        format: uint64
+                      forfeitedCount:
+                        type: string
+                        format: uint64
+                      dateUpdated:
+                        type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
   /cosmonaut/leaderboard/leaderboard/params:
     get:
       summary: Parameters queries the parameters of the module.
@@ -30730,6 +30779,25 @@ paths:
       tags:
         - Query
 definitions:
+  cosmonaut.leaderboard.leaderboard.Board:
+    type: object
+    properties:
+      playerInfo:
+        type: object
+        properties:
+          index:
+            type: string
+          wonCount:
+            type: string
+            format: uint64
+          lostCount:
+            type: string
+            format: uint64
+          forfeitedCount:
+            type: string
+            format: uint64
+          dateUpdated:
+            type: string
   cosmonaut.leaderboard.leaderboard.MsgSendIbcTopRankResponse:
     type: object
   cosmonaut.leaderboard.leaderboard.Params:
@@ -30797,6 +30865,28 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
+  cosmonaut.leaderboard.leaderboard.QueryGetBoardResponse:
+    type: object
+    properties:
+      Board:
+        type: object
+        properties:
+          playerInfo:
+            type: object
+            properties:
+              index:
+                type: string
+              wonCount:
+                type: string
+                format: uint64
+              lostCount:
+                type: string
+                format: uint64
+              forfeitedCount:
+                type: string
+                format: uint64
+              dateUpdated:
+                type: string
   cosmonaut.leaderboard.leaderboard.QueryGetPlayerInfoResponse:
     type: object
     properties:
